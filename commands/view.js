@@ -1,5 +1,6 @@
 let fs=require("fs");
 let path=require("path");
+
 function viewHelper(dirName, mode) {
     if (mode == "tree") {
         viewTree(dirName,"");
@@ -13,7 +14,17 @@ module.exports = {
     fn: viewHelper
 }
 
-// view flat
+//check given path is file or not
+function isFileOrNot(src) {
+    return fs.lstatSync(src).isFile();
+}
+
+//read content 
+function readContent(src) {
+    return fs.readdirSync(src);
+}
+
+// =================================================== view flat ===================================================
 function viewFlat(src) {
     // check the given source is file or not 
     let isFile = isFileOrNot(src);
@@ -25,6 +36,7 @@ function viewFlat(src) {
     else {
         // print src
         console.log(src);
+        // read content of folder "src"
         // content read from os
         let fDirnames = readContent(src);
         // recursion 
@@ -39,7 +51,7 @@ function viewFlat(src) {
     }
 }
 
-//view tree
+// =================================================== view tree ===================================================
 function viewTree(src, indent) {
     //check given src is file or not
     let isFile = isFileOrNot(src);
@@ -65,15 +77,7 @@ function viewTree(src, indent) {
     }
 }
 
-//check given path is file or not
-function isFileOrNot(src) {
-    return fs.lstatSync(src).isFile();
-}
 
-//read content 
-function readContent(src) {
-    return fs.readdirSync(src);
-}
 
 // folder
         // activity
